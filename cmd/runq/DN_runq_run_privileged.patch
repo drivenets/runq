@@ -1,0 +1,31 @@
+diff --git a/runq.go b/runq.go
+index de03235b..05fefb43 100644
+--- a/runq.go
++++ b/runq.go
+@@ -60,15 +60,18 @@ func turnToRunq(context *cli.Context, spec *specs.Spec) error {
+ 		return fmt.Errorf("unsupported spec (%s), need %s.x", spec.Version, runqOciVersion)
+ 	}
+ 
++	spec.Linux.MaskedPaths = nil
++	spec.Linux.Devices = nil
++
+ 	// Check if running in privileged mode.
+-	if len(spec.Linux.MaskedPaths) == 0 {
+-		return fmt.Errorf("privileged mode is not supported")
+-	}
+-	for _, d := range spec.Linux.Devices {
+-		if d.Path == "/dev/mem" {
+-			return fmt.Errorf("privileged mode is not supported")
+-		}
+-	}
++	// if len(spec.Linux.MaskedPaths) == 0 {
++	//	return fmt.Errorf("privileged mode is not supported")
++	// }
++	// for _, d := range spec.Linux.Devices {
++	// 	if d.Path == "/dev/mem" {
++	//		return fmt.Errorf("privileged mode is not supported")
++	//	}
++	// }
+ 
+ 	//
+ 	// Linux
